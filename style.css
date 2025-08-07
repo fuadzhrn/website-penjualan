@@ -1,0 +1,22 @@
+#bg-login {
+    background-image: url('asset/image/bg-login.png');
+    background-size: cover;         /* Membesarkan gambar secara proporsional */
+    background-position: center;    /* Posisi gambar di tengah */
+    background-repeat: no-repeat;   /* Tidak mengulang gambar */
+}
+
+.slide-down {
+    animation: slide-down 1.5s;
+}
+
+@keyframes slide-down {
+    from {
+        opacity: 0;
+        transform: translateY(-80px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
