@@ -48,7 +48,7 @@ if (isset($_POST['simpan'])) {
               <li class="breadcrumb-item"><a href="<?= $main_url?>dashboard.php">Home</a></li>
               <li class="breadcrumb-item"><a href="<?= $main_url?>user/data-user.php">Users</a></li>
               <li class="breadcrumb-item active">Add User</li>
-            </ol>zp
+            </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
