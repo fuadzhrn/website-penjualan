@@ -14,6 +14,8 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $main_url?>asset/adminLTE-3.2.0/dist/css/adminlte.min.css">
   <link rel="shortcut icon" href="<?= $main_url?>asset/image/cart.png" type="image/x-icon">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 </head>
 <!--
 `body` tag options:

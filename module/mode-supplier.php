@@ -20,4 +20,20 @@ function insert_supplier($data){
     return mysqli_affected_rows($koneksi);
 }
 
+
+function delete_supplier($id) {
+    global $koneksi;
+
+    $id = (int)$id;
+    $sqlDelete = "DELETE FROM tbl_supplier WHERE id_supplier = $id";
+
+    if (!mysqli_query($koneksi, $sqlDelete)) {
+        echo "Gagal menghapus: " . mysqli_error($koneksi);
+        return 0;
+    }
+
+    return mysqli_affected_rows($koneksi);
+}
+
+
 ?>

@@ -29,5 +29,17 @@
 
 <!-- OPTIONAL SCRIPTS -->
 <script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/chart.js/Chart.min.js"></script>
+<!-- DataTables  & Plugins -->
+<script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+
+<script>
+  $(function(){
+    $('#tblData').DataTable();
+  });
+</script>
 </body>
 </html>
