@@ -12,12 +12,25 @@ if(!isset($_SESSION["ssLoginPOS"])){
 require "../config/config.php";
 require "../config/functions.php";
 require "../module/mode-user.php";
-// require "../module/mode-barang.php";
+require "../module/mode-barang.php";
 
 $title = "Form Barang - Website Penjualan";
 require "../template/header.php";
 require "../template/navbar.php";
 require "../template/sidebar.php";
+
+$alert = '';
+
+if(isset($_POST['simpan'])){
+  if (insert_barang($_POST)){
+     $alert = '<div class="alert alert-success alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h5><i class="icon fas fa-check"></i></h5>
+                Barang Berhasil Ditambahkan...
+              </div>';
+  }
+}
+
 
 ?>
 
@@ -44,6 +57,11 @@ require "../template/sidebar.php";
     <section class="content">
         <div class="container-fluid">
             <div class="card">
+              <form action="" method="post" enctype="multipart/form-data">
+                <?php 
+                if ($alert != ''){
+                  echo $alert;
+                } ?>
                 <div class="card-header">
                         <h3 class="card-title"><i class="fas fa-plus fa-sm pr-2"></i> Tambah Barang</h3>
                         <button type="submit" name="simpan" class="btn btn-primary btn-sm float-right">
@@ -56,7 +74,7 @@ require "../template/sidebar.php";
                         <div class="col-lg-8 mb-3 pr3">
                             <div class="form-group">
                             <label for="kode">Kode Barang</label>
-                            <input type="text" name="kode" class="form-control" id="kode" readonly>
+                            <input type="text" name="kode" class="form-control" id="kode" value="<?= generateId()?>" readonly>
                         </div>
                             <div class="form-group">
                             <label for="barcode">Barcode *</label>
@@ -97,6 +115,7 @@ require "../template/sidebar.php";
                         </div>
                     </div>
                 </div>
+                </form>
             </div>
         </div>
     </section>

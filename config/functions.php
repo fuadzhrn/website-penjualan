@@ -1,6 +1,6 @@
 <?php
 
-function uploadimg($url = null) {
+function uploadimg($url = null, $name = null) {
     $namafile = $_FILES['image']['name'];
     $ukuran   = $_FILES['image']['size'];
     $tmp      = $_FILES['image']['tmp_name'];
@@ -41,7 +41,14 @@ function uploadimg($url = null) {
         return false;
     }
     }
+
+    if($name != null){
+        $namaFileBaru = $name . '-' . $ekstensi;
+    }else{
+        
     $namaFileBaru = rand(10, 1000) . '-' . $namafile;
+    }
+
     $target = $_SERVER['DOCUMENT_ROOT'] . '/website-penjualan/asset/image/' . $namaFileBaru;
 
     if (move_uploaded_file($tmp, $target)) {
