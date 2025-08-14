@@ -80,6 +80,8 @@ function userLogin(){
 }
 
 
+
+
 function userMenu(){
     $uri_path   = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $uri_segments = explode('/', $uri_path);
@@ -124,10 +126,32 @@ function menuSupplier(){
 }
 
 function menuMaster(){
-    if (userMenu()== 'supplier'){
+    if (userMenu() == 'supplier' or userMenu() == 'customer' or userMenu() == 'barang'){
         $result = 'menu-is-opening menu-open';
     }else{
         $result = null;
+    }
+    return $result;
+}
+
+function menuCustomer()
+{
+    if (userMenu() == 'customer'){
+        $result = 'active';
+    }else{
+        $result = null;
+
+    }
+    return $result;
+}
+
+function menuBarang()
+{
+    if (userMenu() == 'barang'){
+        $result = 'active';
+    }else{
+        $result = null;
+
     }
     return $result;
 }

@@ -54,7 +54,7 @@
                         </a>
                     </li>
                     <li class="Nav-item">
-                        <a href="#" class="nav-link">
+                        <a href="<?= $main_url ?>barang" class="nav-link <?= menuBarang() ?>">
                             <i class="far fa-circle nav-icon text-sm"></i>
                             <p>Barang</p>
                         </a>
