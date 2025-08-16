@@ -14,6 +14,12 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="<?= $main_url?>asset/adminLTE-3.2.0/dist/css/adminlte.min.css">
   <link rel="shortcut icon" href="<?= $main_url?>asset/image/cart.png" type="image/x-icon">
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="<?= $main_url?>asset/adminLTE-3.2.0/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
+  <!-- SweetAlert2 -->
+  <script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/sweetalert2/sweetalert2.min.js"></script>
+  <!-- jQuery -->
+<script src="<?= $main_url?>asset/adminLTE-3.2.0/plugins/jquery/jquery.min.js"></script>
   <!-- DataTables -->
   <link rel="stylesheet" href="<?= $main_url?>asset/adminLTE-3.2.0/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 </head>

@@ -20,7 +20,30 @@ require "../template/navbar.php";
 require "../template/sidebar.php";
 
 
+if(isset($_GET['msg'])){
+    $msg = $_GET['msg'];
 
+}else{
+    $msg = '';
+}
+
+$alert = '';
+// jalankan fungsiu hapus barang
+if ($msg == 'deleted'){
+  $id = $_GET['id'];
+  $gbr = $_GET['gbr'];
+  delete_barang($id, $gbr);
+  $alert = "<script> 
+                  $(document).ready(function(){
+                      $(document).Toasts('create',{
+                          title : 'Sukses',
+                          body  : 'Data berhasil dihapus dari database...',
+                          class : 'bg-success',
+                          icon  : 'fas fa-check-circle',
+                        })
+                    });
+              </script>";
+}
 
 ?>
 
@@ -47,10 +70,15 @@ require "../template/sidebar.php";
     <section class="content">
         <div class="container-fluid">
             <div class="card">
+              <?php
+              if ($alert !=''){
+                echo $alert;
+              }
+              ?>
                 <div class="card-header">
                     <h3 class="card-title"><i class="fas fa-list fa-sm pr-2"></i> Data Barang</h3>
                     
-                    <a href="<?= $main_url?>barang/form-barang" class="mr-2 btn btn-sm btn-primary float-right"><i class="fas fa-plus fa-sm pr-2"></i> Add Barang</a>
+                    <a href="<?= $main_url?>barang/form-barang.php" class="mr-2 btn btn-sm btn-primary float-right"><i class="fas fa-plus fa-sm pr-2"></i> Add Barang</a>
                 </div>
                 <div class="card-body table-responsive p-3">
                         <table class="table table-hover text-nowrap" id="tblData">
@@ -77,7 +105,6 @@ require "../template/sidebar.php";
                                             <td><?= $brg['nama_barang'] ?></td>
                                             <td class="text-center"><?= number_format($brg['harga_beli'],0,',','.') ?></td>
                                             <td class="text-center"><?= number_format($brg['harga_jual'],0,',','.') ?></td>
-                                            <td><?= $brg['nama_barang'] ?></td>
                                             <td>
                                                 <a href="?id=<?= $brg['id_barang'] ?>&gbr=<?= $brg['gambar'] ?>&msg=deleted" class="btn btn-danger btn-sm" title="hapus barang" onclick="return confirm('Anda yakin akan menghapus barang ini ?')"><i class="fas fa-trash"></i></a>
                                             </td>
@@ -85,6 +112,7 @@ require "../template/sidebar.php";
 
                                     <?php
                                     }
+                                    
                                 ?>
                             </tbody>
                         </table>
