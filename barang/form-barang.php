@@ -19,9 +19,33 @@ require "../template/header.php";
 require "../template/navbar.php";
 require "../template/sidebar.php";
 
+
+if (isset($_GET['msg'])){
+  $msg = $_GET['msg'];
+  $id  = $_GET['id'];
+  $sqlEdit = "SELECT * FROM tbl_barang WHERE id_barang = '$id'";
+  $barang = getData($sqlEdit)[0];
+}else{
+  $msg = "";
+}
+
+
 $alert = '';
 
 if(isset($_POST['simpan'])){
+  if ($msg != ''){
+      if (update_brg($_POST)){
+        echo "
+              <script>document.location.href = 'index.php?msg=updated'; </script>
+        ";
+      }else{
+        echo "
+              <script>document.location.href = 'index.php'; </script>
+        ";
+      }
+  }else{
+
+  
   if (insert_barang($_POST)){
      $alert = '<div class="alert alert-success alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
@@ -29,6 +53,7 @@ if(isset($_POST['simpan'])){
                 Barang Berhasil Ditambahkan...
               </div>';
   }
+}
 }
 
 
@@ -47,7 +72,7 @@ if(isset($_POST['simpan'])){
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="<?= $main_url?>dashboard.php">Home</a></li>
               <li class="breadcrumb-item"><a href="<?= $main_url?>barang">Barang</a></li>
-              <li class="breadcrumb-item active">Add Barang</li>
+              <li class="breadcrumb-item active"><?= $msg != ''? 'Edit Barang' : 'Add Barang' ?></li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -63,7 +88,7 @@ if(isset($_POST['simpan'])){
                   echo $alert;
                 } ?>
                 <div class="card-header">
-                        <h3 class="card-title"><i class="fas fa-plus fa-sm pr-2"></i> Tambah Barang</h3>
+                        <h3 class="card-title"><i class="fas fa-pen fa-sm pr-2"></i> <?= $msg != ''? 'Edit Barang' : 'Input Barang' ?></h3>
                         <button type="submit" name="simpan" class="btn btn-primary btn-sm float-right">
                 <i class="fas fa-bookmark pr-2"></i>Simpan</button>
                 <button type="reset" class="btn btn-danger btn-sm float-right mr-1"><i class="fas fa-exclamation pr-2"></i>Reset</button>
@@ -74,42 +99,61 @@ if(isset($_POST['simpan'])){
                         <div class="col-lg-8 mb-3 pr3">
                             <div class="form-group">
                             <label for="kode">Kode Barang</label>
-                            <input type="text" name="kode" class="form-control" id="kode" value="<?= generateId()?>" readonly>
+                            <input type="text" name="kode" class="form-control" id="kode" value="<?= $msg != ''? $barang['id_barang'] : generateId() ?>" readonly>
                         </div>
                             <div class="form-group">
                             <label for="barcode">Barcode *</label>
-                            <input type="text" name="barcode" class="form-control" id="barcode" placeholder="barcode" autocomplete="off" autofocus required>
+                            <input type="text" name="barcode" class="form-control" id="barcode" value="<?= $msg != ''? $barang['barcode'] : null ?>" placeholder="barcode" autocomplete="off" autofocus required>
                         </div>
                             <div class="form-group">
                             <label for="name">Nama *</label>
-                            <input type="text" name="name" class="form-control" id="name" placeholder="nama barang" autocomplete="off" autofocus required>
+                            <input type="text" name="name" class="form-control" id="name" placeholder="nama barang" value="<?= $msg != ''? $barang['nama_barang'] : null ?>" autocomplete="off" autofocus required>
                         </div>
                             <div class="form-group">
                             <label for="satuan">Satuan *</label>
                             <select name="satuan" id="satuan" class="form-control" required>
-                                <option value="">--Satuan Barang--</option>
+                              <?php
+                                  if ($msg !=""){
+                                    $satuan = ["piece", "botol","kaleng", "pouch"];
+                                    foreach($satuan as $sat){
+                                      if ($barang['satuan'] == $sat){ ?>
+                                            <option value="<?= $sat ?>"selected><?= $sat ?></option>
+                                     <?php }else{ ?>
+                                            <option value="<?= $sat ?>"><?= $sat ?></option>
+                                      <?php
+                                      }
+                                    }
+
+                                  }else{ ?>
+                                   <option value="">--Satuan Barang--</option>
                                 <option value="piece">piece</option>
                                 <option value="botol">botol</option>
                                 <option value="kaleng">kaleng</option>
                                 <option value="pouch">pouch</option>
+
+                                <?php
+                                  }
+                              ?>
+                            
                             </select>
                         </div> 
                         <div class="form-group">
                             <label for="harga_beli">Harga Beli *</label>
-                            <input type="number" name="harga_beli" class="form-control" id="harga_beli" placeholder="Rp 0" autocomplete="off" required>
+                            <input type="number" name="harga_beli" class="form-control" id="harga_beli" placeholder="Rp 0"value="<?= $msg != ''? $barang['harga_beli'] : null ?>"  autocomplete="off" required>
                         </div>
                         <div class="form-group">
                             <label for="harga_jual">Harga jual *</label>
-                            <input type="number" name="harga_jual" class="form-control" id="harga_jual" placeholder="Rp 0" autocomplete="off" required>
+                            <input type="number" name="harga_jual" class="form-control" id="harga_jual"value="<?= $msg != ''? $barang['harga_jual'] : null ?>"  placeholder="Rp 0" autocomplete="off" required>
                         </div>
                         <div class="form-group">
                             <label for="stock_minimal">Stock Minimal *</label>
-                            <input type="number" name="stock_minimal" class="form-control" id="stock minimal" placeholder="0" autocomplete="off" required>
+                            <input type="number" name="stock_minimal" class="form-control" id="stock minimal"value="<?= $msg != ''? $barang['stock_minimal'] : null ?>"  placeholder="0" autocomplete="off" required>
                         </div>
                         </div>
                         
                         <div class="col-lg-4 text-center px-3">
-                            <img src="<?= $main_url ?>asset/image/default-brg.jpg" class="profile-user-img mb-3 mt-4" alt="">
+                          <input type="hidden" name="oldImg" value="<?= $msg != ''? $barang['gambar'] : null ?>" >
+                            <img src="<?= $main_url ?>asset/image/<?= $msg != ''? $barang['gambar'] : 'default-brg.jpg' ?> " class="profile-user-img mb-3 mt-4" alt="">
                             <input type="file" class="form-control" name="image">
                             <span class="text-sm">Type file gambar JPG| PNG | GIF</span>
                         </div>
